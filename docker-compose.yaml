@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  Homework:
+    image: php:7.4-alpine
+    ports:
+      - "88:80"
+    volumes:
+      - .:/var/www/html
