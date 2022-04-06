@@ -17,11 +17,11 @@ class Color
 
 
 
-    public function setRed(int $red): void
+    private function setRed(int $red): void
     {
-        if ($red > 255)
+        if (!$this->isValide($red))
         {
-            throw new Exception("not a valid number");
+            throw new Exception("not a valid color");
         }
         $this->red = $red;
     }
@@ -30,9 +30,9 @@ class Color
     {
         return $this->red;
     }
-    public function setGreen(int $green): void
+    private function setGreen(int $green): void
     {
-        if ($green > 255)
+        if (!$this->isValide($green))
         {
             throw new Exception("not a valid number");
         }
@@ -43,9 +43,9 @@ class Color
     {
         return $this->green;
     }
-    public function setBlue(int $blue): void
+    private function setBlue(int $blue): void
     {
-        if ($blue > 255)
+        if (!$this->isValide($blue))
         {
             throw new Exception("not a valid number");
         }
@@ -56,24 +56,40 @@ class Color
     {
         return $this->blue;
     }
-    public function isEquals(Color $rgb): bool
-    {
-        return $this == $rgb;
-
-    }
-    public function mix(int $rgb)
+    public function Equals(Color $color): bool
     {
 
+          return $this == $color;
 
     }
+    public function mix(Color $color)
+    {
+        return new Color(
+            intval (($this->red + $color->red) / 2),
+            intval (($this->green + $color->green) / 2),
+                intval (($this->blue + $color->blue) / 2),
+        );
+    }
 
-
+    private function isValide (int $value):bool
+    {
+       return $value < 0 || $value > 255;
+    }
+    public static function random()
+    {
+        return new Color(
+            rand(0,255),
+            rand(0,255),
+            rand(0,255)
+        );
+    }
 
 
 }
 
-$rgb =  new Color  (200, 200, 200);
-$rgb1 = new Color(200, 200, 200);
+$color1 = Color::random();
+$color2 = Color::random();
+$color3 = $color1->mix($color2);
 
-//echo $color->mix();
-//echo $color->isEquals();
+var_dump($color3);
+
